@@ -17,4 +17,13 @@ class ServGagnaireController extends AbstractController
             'controller_name' => 'ServGagnaireController',
         ]);
     }
+    /**
+     * @Route("/serv/login", name="login")
+     */
+    public function login(): Response
+    {
+        return $this->render('serv_gagnaire/login.html.twig', [
+            'controller_name' => 'ServGagnaireController',
+        ]);
+    }
 }

@@ -9,12 +9,32 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/etudrt/servGagnaire/src/Controller/ServGagnaireController.php'|file_link(0) }}">src/Controller/ServGagnaireController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/etudrt/servGagnaire/templates/serv_gagnaire/index.html.twig'|file_link(0) }}">templates/serv_gagnaire/index.html.twig</a></code></li>
-    </ul>
+    <h1>Bienvenue {{ controller_name }}!</h1>
 </div>
+    <center>
+    <div class="card text-white bg-success mb-3" style="max-width: 50rem;">
+    <div class="card-body">
+    <form method="post" action="/serv/login">
+    <p>
+    <tr>
+      <div class="form-group">
+      <label for="exampleInputPassword1" class="form-label mt-4">Login</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Login">
+      <div class="form-group">
+      <label for="exampleInputLogin" class="form-label mt-2">Password</label>
+      <input type="password" class="form-control" id="exampleInputLogin" placeholder="Password">
+      </div
+    </tr>
+    </p>
+    </div>
+    </center>
+    </form>
+
+</div>
+    </fieldset>
+    <center>
+    <a href="login.html.twig"></a><button type="submit" class="btn btn-success">Connexion</button>
+    </fieldset>
+    </center>
+
 {% endblock %}
