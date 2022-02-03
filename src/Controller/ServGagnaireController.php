@@ -24,17 +24,17 @@ class ServGagnaireController extends AbstractController
     public function login(Request $request): Response
     {
 			//récupération des infos du formulaire.
-			$login = $request->request->get("Login");
-			$password = $request->request->get("Password");
-            $message = $request->request->get("message");
+			$login = $request->request->get("login");
+			$password = $request->request->get("password");
             if ($login=="root" && $password=="toor")
-            $message = "login et mot de passe correct";
+                $message = "✔️ Login et mot de passe corrects ✔️";
             else
-                $message = "ATTENTION : login et mot de passe incorrect";       
-        return $this->render('serv_gagnaire/login.html.twig', [
-            'Login' => $login,
-            'Password' => $password,
-            'message'=> $message,
+                $message = "⛔ ATTENTION : Login et mot de passe incorrects ⛔";  
+
+            return $this->render('serv_gagnaire/login.html.twig', [
+              'login' => $login,
+              'password' => $password,
+              'message'=> $message,
         
         ]);
     }
