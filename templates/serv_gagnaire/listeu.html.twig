@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+<center>
+<h1>📌 Liste des utilisateurs 📌</h1>
+</center>
+<br>
+<br>
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Login</th>
+      <th scope="col">Mot de passe</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for un_utilisateur in lst_utilisateurs %}
+    <tr class="table-active">
+      <td>{{ un_utilisateur.login }} </td>
+      <td>{{ un_utilisateur.password }}</td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
+
+{% endblock %}
+

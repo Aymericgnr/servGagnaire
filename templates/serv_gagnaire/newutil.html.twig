@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un compte{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Créer votre compte : </h1>
+</div>
+    <center>
+    <div class="card text-white bg-info mb-3" style="max-width: 50rem;">
+    <div class="card-body">
+    <form method="post" action="/serv/inserutil">
+    <p>
+    <tr>
+      <div class="form-group">
+      <label for="exampleInput" class="form-label mt-1">Login</label>
+      <input type="text" class="form-control" name="login" id="login" placeholder="Login">
+      <div class="form-group">
+      <label for="exampleInputPassword1" class="form-label mt-1">Password</label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+      </div
+    </tr>
+    </p>
+    </div>
+    <button type="submit" class="btn btn-info">Création</button>
+    </center>
+    </form>
+
+</div>
+
+
+{% endblock %}

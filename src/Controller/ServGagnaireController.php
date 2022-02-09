@@ -28,10 +28,15 @@ class ServGagnaireController extends AbstractController
 			//récupération des infos du formulaire.
 			$login = $request->request->get("login");
 			$password = $request->request->get("password");
-            if ($login=="root" && $password=="toor")
-                $message = "✔️ Login et mot de passe corrects ✔️";
+            $reponse = $manager -> getRepository(Utilisateur :: class) -> findOneBy(['Login' => $login]);
+            if($reponse==NULL)
+                $message = "⛔ ATTENTION : Le login ne peut pas être nul ⛔";
             else
-                $message = "⛔ ATTENTION : Login et mot de passe incorrects ⛔";  
+                $hash = $reponse -> getPassword();
+                if (password_verify($password, $hash))
+                    $message = "✔️ Connexion réussie ✔️";
+                else
+                    $message = "⛔ ATTENTION : Mot de passe incorrect ⛔";  
 
             return $this->render('serv_gagnaire/login.html.twig', [
               'login' => $login,
@@ -39,5 +44,37 @@ class ServGagnaireController extends AbstractController
               'message'=> $message,
         
         ]);
+    }
+    /**
+     * @Route("/serv/newutil", name="serv_newutil")
+     */
+    public function newutil(): Response
+    {
+        return $this->render('serv_gagnaire/newutil.html.twig', [
+            'controller_name' => 'ServGagnaireController',
+        ]);
+    }
+    /**
+     * @Route("/serv/inserutil", name="serv_inserutil")
+     */
+    public function inserutil(Request $request,EntityManagerInterface $manager): Response
+    {
+        $login = $request->request->get("login");
+        $password = $request->request->get("password");
+        $password =password_hash($password,PASSWORD_DEFAULT);
+        $monUtilisateur = new Utilisateur ();
+        $monUtilisateur -> setLogin($login);
+        $monUtilisateur -> setPassword($password);
+        $manager -> persist($monUtilisateur);
+        $manager -> flush ();
+        return $this->redirectToRoute ('serv_newutil');
+    }
+    /**
+     * @Route("/serv/listeu", name="serv_listeu")
+     */
+    public function listeu(Request $request,EntityManagerInterface $manager): Response
+    {
+        $mesUtilisateurs=$manager->getRepository(Utilisateur::class)->findAll();
+        return $this->render('serv_gagnaire/listeu.html.twig',['lst_utilisateurs' => $mesUtilisateurs]);
     }
 }
