@@ -14,8 +14,25 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">Menu :</a>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="/serv/gagnaire">📝Connexion📝</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/serv/newutil">💾Création💾</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/serv/listeu">📌Liste des Utilisateurs📌</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </nav>
         {% block body %}
         {% endblock %}
-    
     </body>
 </html>

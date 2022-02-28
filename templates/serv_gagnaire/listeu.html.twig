@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des utilisateurs{% endblock %}
+{% block title %}📌Liste des utilisateurs📌{% endblock %}
 
 {% block body %}
 <center>
@@ -20,6 +20,7 @@
     <tr class="table-active">
       <td>{{ un_utilisateur.login }} </td>
       <td>{{ un_utilisateur.password }}</td>
+      <td><a href="/supprimerUtilisateur/{{ un_utilisateur.id }}"> <input type="button" class="btn btn-danger" value="Supprimer"> </a></td>
     </tr>
   </tbody>
   {% endfor %}

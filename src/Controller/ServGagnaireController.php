@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Utilisateur;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ServGagnaireController extends AbstractController
 {
@@ -23,20 +24,27 @@ class ServGagnaireController extends AbstractController
     /**
      * @Route("/serv/login", name="serv_login")
      */
-    public function login(Request $request,EntityManagerInterface $manager): Response
+    public function login(Request $request,EntityManagerInterface $manager, SessionInterface $session): Response
     {
 			//récupération des infos du formulaire.
 			$login = $request->request->get("login");
 			$password = $request->request->get("password");
             $reponse = $manager -> getRepository(Utilisateur :: class) -> findOneBy(['Login' => $login]);
-            if($reponse==NULL)
+            if($reponse==NULL){
                 $message = "⛔ ATTENTION : Le login ne peut pas être nul ⛔";
-            else
+                $session -> clear ();
+            }
+            else{
                 $hash = $reponse -> getPassword();
-                if (password_verify($password, $hash))
+                if (password_verify($password, $hash)){
                     $message = "✔️ Connexion réussie ✔️";
-                else
+                    $session -> set('identifiant',$reponse->getId());
+                }
+                else{
                     $message = "⛔ ATTENTION : Mot de passe incorrect ⛔";  
+                    $session -> clear ();
+                }
+            }
 
             return $this->render('serv_gagnaire/login.html.twig', [
               'login' => $login,
@@ -72,9 +80,25 @@ class ServGagnaireController extends AbstractController
     /**
      * @Route("/serv/listeu", name="serv_listeu")
      */
-    public function listeu(Request $request,EntityManagerInterface $manager): Response
+    public function listeu(Request $request,EntityManagerInterface $manager,SessionInterface $session): Response
     {
+        $vs = $session -> get('identifiant');
+        if($vs==NULL)
+            return $this->redirectToRoute ('serv_gagnaire');
+        else{
         $mesUtilisateurs=$manager->getRepository(Utilisateur::class)->findAll();
         return $this->render('serv_gagnaire/listeu.html.twig',['lst_utilisateurs' => $mesUtilisateurs]);
+        }
+    }
+
+    /**
+    * @Route("/supprimerUtilisateur/{id}",name="supprimer_Utilisateur")
+    */
+    public function supprimerUtilisateur(EntityManagerInterface $manager,Utilisateur $editutil): Response 
+    {
+    $manager->remove($editutil);
+    $manager->flush();
+    // Affiche de nouveau la liste des utilisateurs
+    return $this->redirectToRoute ('serv_listeu');
     }
 }
